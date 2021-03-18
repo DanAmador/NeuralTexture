@@ -8,7 +8,7 @@ VIEW_DIRECTION = True
 
 # =============== Train Configurations ===========
 DATA_DIR = 'data/'
-CHECKPOINT_DIR = ''
+CHECKPOINT_DIR = 'data/checkpoints'
 LOG_DIR = ''
 TRAIN_SET = ['{:04d}'.format(i) for i in range(500)]
 EPOCH = 50
@@ -28,4 +28,9 @@ EPOCH_PER_CHECKPOINT = 50
 TEST_LOAD = ''
 TEST_DATA_DIR = ''
 TEST_SET = ['{:04d}'.format(i) for i in range(10)]
-SAVE_DIR = ''
+SAVE_DIR = 'data/output'
+
+
+# ============= Render Config ====================
+OUT_MODE = "video"
+FPS = 30

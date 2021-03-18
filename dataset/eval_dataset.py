@@ -3,7 +3,7 @@ import os
 import torch
 from torch.utils.data import Dataset
 
-from util import map_transform, view2sh
+from util import map_transform
 
 
 class EvalDataset(Dataset):

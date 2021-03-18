@@ -1,6 +1,6 @@
-dataset/extrinsics
-dataset/frame
-dataset/uv
+data/extrinsics
+data/frame
+data/uv
 .idea
 # Byte-compiled / optimized / DLL files
 __pycache__/

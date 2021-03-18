@@ -7,10 +7,10 @@ VIEW_DIRECTION = True
 
 
 # =============== Train Configurations ===========
-DATA_DIR = ''
+DATA_DIR = 'data/'
 CHECKPOINT_DIR = ''
 LOG_DIR = ''
-TRAIN_SET = ['{:04d}'.format(i) for i in range(899)]
+TRAIN_SET = ['{:04d}'.format(i) for i in range(500)]
 EPOCH = 50
 BATCH_SIZE = 12
 CROP_W = 256

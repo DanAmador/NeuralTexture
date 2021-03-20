@@ -91,11 +91,9 @@ def main():
 
 
     
-    # then whenever you get a new Tensor or Module
-    # this won't copy if they are already on the desired device
-    #input = data.to(device)
-    #model = MyModule(...).to(device)
-    model = model.to(config.DEVICE)
+    model = model.to('cuda')
+
+    #model = model.to(config.DEVICE)
     model.train()
     torch.set_grad_enabled(True)
     criterion = nn.L1Loss()
@@ -117,7 +115,7 @@ def main():
 
                 step += images.shape[0]
                 optimizer.zero_grad()
-                RGB_texture, preds = model(uv_maps.to(config.DEVICE), extrinsics.to(config.DEVICE))
+                RGB_texture, preds = model(uv_maps.cuda(), extrinsics.cuda())
             else:
                 images, uv_maps, masks = samples
                 # random scale
@@ -129,7 +127,7 @@ def main():
                 
                 step += images.shape[0]
                 optimizer.zero_grad()
-                RGB_texture, preds = model(uv_maps.to(config.DEVICE))
+                RGB_texture, preds = model(uv_maps.cuda())
 
             loss1 = criterion(RGB_texture.cpu(), images)
             loss2 = criterion(preds.cpu(), images)

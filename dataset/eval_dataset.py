@@ -2,8 +2,9 @@ import numpy as np
 import os
 import torch
 from torch.utils.data import Dataset
+from PIL import Image
 
-from util import map_transform
+from util import convert2RG
 
 
 class EvalDataset(Dataset):
@@ -12,21 +13,23 @@ class EvalDataset(Dataset):
         self.idx_list = idx_list
         self.dir = dir
         self.view_direction = view_direction
-        uv_map = np.load(os.path.join(self.dir, 'uv/'+self.idx_list[0]+'.npy'))
+        uv_map = torch.from_numpy(convert2RG(Image.open(os.path.join(self.dir, 'uv/'+self.idx_list[1]+'.png'), 'r')))
+        
         self.height, self.width, _ = uv_map.shape
 
     def __len__(self):
         return len(self.idx_list)
 
     def __getitem__(self, idx):
-        uv_map = np.load(os.path.join(self.dir, 'uv/'+self.idx_list[idx]+'.npy'))
+
+        uv_map = convert2RG(Image.open(os.path.join(self.dir, 'uv/'+self.idx_list[idx]+'.png'), 'r'))
+
         nan_pos = np.isnan(uv_map)
         uv_map[nan_pos] = 0
         if np.any(np.isnan(uv_map)):
             print('nan in dataset')
 
-        # final transform
-        uv_map = map_transform(uv_map)
+        uv_map = torch.from_numpy(uv_map)
         # mask for invalid uv positions
         mask = torch.max(uv_map, dim=2)[0].le(-1.0 + 1e-6)
         mask = mask.repeat((3, 1, 1))

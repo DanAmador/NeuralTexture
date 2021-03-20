@@ -9,7 +9,6 @@ VIEW_DIRECTION = True
 
 # at beginning of the script
 #DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-z
 
 # =============== Train Configurations ===========
 DATA_DIR = 'data/'

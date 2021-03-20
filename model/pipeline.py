@@ -3,6 +3,7 @@ import numpy as np
 import sys
 import torch
 import torch.nn as nn
+import config
 
 sys.path.append('..')
 from model.texture import Texture
@@ -48,7 +49,7 @@ class PipeLine(nn.Module):
             uv_map, extrinsics = args
             x = self.texture(uv_map)
             assert x.shape[1] >= 12
-            basis = self._spherical_harmonics_basis(extrinsics).cuda()
+            basis = self._spherical_harmonics_basis(extrinsics).to(config.DEVICE)
             basis = basis.view(basis.shape[0], basis.shape[1], 1, 1)
             x[:, 3:12, :, :] = x[:, 3:12, :, :] * basis
         else:

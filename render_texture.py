@@ -21,7 +21,6 @@ parser.add_argument('--load', type=str, default=config.TEST_LOAD, help='checkpoi
 parser.add_argument('--batch', type=int, default=config.BATCH_SIZE)
 parser.add_argument('--save', type=str, default=config.SAVE_DIR, help='save directory')
 parser.add_argument('--out_mode', type=str, default=config.OUT_MODE, choices=('video', 'image'))
-parser.add_argument('--fps', type=int, default=config.FPS)
 args = parser.parse_args()
 
 

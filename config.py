@@ -1,3 +1,5 @@
+import torch
+
 # =============== Basic Configurations ===========
 TEXTURE_W = 1024
 TEXTURE_H = 1024
@@ -5,12 +7,15 @@ TEXTURE_DIM = 16
 USE_PYRAMID = True
 VIEW_DIRECTION = True
 
+# at beginning of the script
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 # =============== Train Configurations ===========
 DATA_DIR = 'data/'
 CHECKPOINT_DIR = 'data/checkpoints'
 LOG_DIR = ''
-TRAIN_SET = ['{:04d}'.format(i) for i in range(500)]
+TRAIN_SET = [str(i) for i in range(500)]
 EPOCH = 50
 BATCH_SIZE = 12
 CROP_W = 256
@@ -27,7 +32,7 @@ EPOCH_PER_CHECKPOINT = 50
 # =============== Test Configurations ============
 TEST_LOAD = ''
 TEST_DATA_DIR = ''
-TEST_SET = ['{:04d}'.format(i) for i in range(10)]
+TEST_SET = [str(i) for i in range(10)]
 SAVE_DIR = 'data/output'
 
 

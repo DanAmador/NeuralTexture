@@ -3,7 +3,7 @@ import os
 from PIL import Image
 from torch.utils.data import Dataset
 
-from util import augment
+from util import augment, convert2RG
 
 
 class UVDataset(Dataset):
@@ -19,13 +19,13 @@ class UVDataset(Dataset):
 
     def __getitem__(self, idx):
         img = Image.open(os.path.join(self.dir, 'frame/'+self.idx_list[idx]+'.png'), 'r')
-        uv_map = np.load(os.path.join(self.dir, 'uv/'+self.idx_list[idx]+'.npy'))
-        nan_pos = np.isnan(uv_map)
-        uv_map[nan_pos] = 0
-        if np.any(np.isnan(uv_map)):
-            print('nan in dataset')
-        if np.any(np.isinf(uv_map)):
-            print('inf in dataset')
+        uv_map = convert2RG(Image.open(os.path.join(self.dir, 'uv/'+self.idx_list[idx]+'.png'), 'r'))
+        
+        img = img.convert("RGB")
+        #if np.any(np.isnan(uv_map)):
+        #    print('nan in dataset')
+        #if np.any(np.isinf(uv_map)):
+        #    print('inf in dataset')
         img, uv_map, mask = augment(img, uv_map, self.crop_size)
         if self.view_direction:
             # view_map = np.load(os.path.join(self.dir, 'view_normal/'+self.idx_list[idx]+'.npy'))

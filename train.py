@@ -58,7 +58,7 @@ def main():
     log_dir = os.path.join(args.logdir, time_string)
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
-    writer = tensorboardX.SummaryWriter(logdir=log_dir)
+    #writer = tensorboardX.SummaryWriter(logdir=log_dir)
 
     checkpoint_dir = args.checkpoint + time_string
     if not os.path.exists(checkpoint_dir):
@@ -136,7 +136,7 @@ def main():
             loss = loss1 + loss2
             loss.backward()
             optimizer.step()
-            writer.add_scalar('train/loss', loss.item(), step)
+            #writer.add_scalar('train/loss', loss.item(), step)
             print('loss at step {}: {}'.format(step, loss.item()))
 
         # save checkpoint

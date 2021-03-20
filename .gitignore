@@ -1,6 +1,10 @@
 data/extrinsics
 data/frame
 data/uv
+
+# TensorBoard
+*events.out.tfevents*
+
 .idea
 # Byte-compiled / optimized / DLL files
 __pycache__/

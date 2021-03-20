@@ -13,18 +13,22 @@ def img_transform(image):
     image = image_transforms(image)
     return image
 
+def convert2RG(f):
+    data =np.array(f)
+    data = data[:,:,:2]
+    data = data * 1/256
+    
+   # nan_pos = np.isnan(data)
+    #data[nan_pos] = 0
+    return  data.astype(np.float32)
 
-def map_transform(map):
-    map = torch.from_numpy(map)
-    return map
 
-
-def augment(img, map, crop_size):
+def augment(img, uv_map, crop_size):
     '''
     :param img:  PIL input image
     :param map: numpy input map
     :param crop_size: a tuple (h, w)
-    :return: image, map and mask
+    :return: image, uv_map and mask
     '''
     # random mirror
     # if random.random() < 0.5:
@@ -37,16 +41,16 @@ def augment(img, map, crop_size):
     w1 = random.randint(0, w - crop_w)
     h1 = random.randint(0, h - crop_h)
     img = img.crop((w1, h1, w1 + crop_w, h1 + crop_h))
-    map = map[h1:h1 + crop_h, w1:w1 + crop_w, :]
+    uv_map = uv_map[h1:h1 + crop_h, w1:w1 + crop_w, :]
 
-    # final transform
-    img, map = img_transform(img), map_transform(map)
-    
+  
+    img, uv_map = img_transform(img), torch.from_numpy(uv_map)
     # mask for valid uv positions
-    mask = torch.max(map, dim=2)[0].ge(-1.0+1e-6)
+    mask = torch.max(uv_map, dim=2)[0].ge(-1.0+1e-6)
+    
     mask = mask.repeat((3,1,1))
 
-    return img, map, mask
+    return img, uv_map, mask
 
 
 # deprecated

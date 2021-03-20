@@ -87,7 +87,15 @@ def main():
         {'params': model.texture.layer4, 'weight_decay': l2[3], 'lr': args.lr},
         {'params': model.unet.parameters(), 'lr': 0.1 * args.lr}],
         betas=betas, eps=args.eps)
-    model = model.to('cuda')
+
+
+
+    
+    # then whenever you get a new Tensor or Module
+    # this won't copy if they are already on the desired device
+    #input = data.to(device)
+    #model = MyModule(...).to(device)
+    model = model.to(config.DEVICE)
     model.train()
     torch.set_grad_enabled(True)
     criterion = nn.L1Loss()
@@ -109,7 +117,7 @@ def main():
 
                 step += images.shape[0]
                 optimizer.zero_grad()
-                RGB_texture, preds = model(uv_maps.cuda(), extrinsics.cuda())
+                RGB_texture, preds = model(uv_maps.to(config.DEVICE), extrinsics.to(config.DEVICE))
             else:
                 images, uv_maps, masks = samples
                 # random scale
@@ -121,7 +129,7 @@ def main():
                 
                 step += images.shape[0]
                 optimizer.zero_grad()
-                RGB_texture, preds = model(uv_maps.cuda())
+                RGB_texture, preds = model(uv_maps.to(config.DEVICE))
 
             loss1 = criterion(RGB_texture.cpu(), images)
             loss2 = criterion(preds.cpu(), images)

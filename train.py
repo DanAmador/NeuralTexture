@@ -133,6 +133,7 @@ def main():
 
             loss1 = criterion(RGB_texture.cpu(), images)
             loss2 = criterion(preds.cpu(), images)
+            print(f"loss1 {loss1}          loss2 {loss2}")
             loss = loss1 + loss2
             loss.backward()
             optimizer.step()

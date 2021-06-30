@@ -1,3 +1,6 @@
+Trained on [Colab](https://colab.research.google.com/drive/1lJ2EY3LXjrvAqza2FXoFy5yBjYmE3L9V?usp=sharing) with a [custom dataset made in Blender and the OpenGL dataset](https://drive.google.com/drive/folders/1x5mg9Dr1Wv8mtPdGW6dbj153dxmpgGh3?usp=sharing).
+
+
 # Neural Texture
 
 This repository implements [Deferred Neural Rendering: Image Synthesis using Neural Textures](https://arxiv.org/abs/1904.12356) .
